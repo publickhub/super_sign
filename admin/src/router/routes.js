@@ -1,0 +1,170 @@
+import layoutHeaderAside from '@/layout/header-aside'
+
+// 由于懒加载页面太多的话会造成webpack热更新太慢，所以开发环境不使用懒加载，只有生产环境使用懒加载
+const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
+
+/**
+ * 在主框架内显示
+ */
+const frameIn = [
+  {
+    path: '/',
+    redirect: { name: 'index' },
+    component: layoutHeaderAside,
+    children: [
+      // 首页
+      {
+        path: 'index',
+        name: 'index',
+        meta: {
+          auth: true
+        },
+        component: _import('system/index')
+      },
+      // 用户管理
+      {
+        path: 'userManage',
+        name: 'userManage',
+        meta: {
+          title: '用户管理',
+          auth: true
+        },
+        component: _import('userManage/userManage')
+      },
+      // 操作记录
+      {
+        path: 'operateRecord',
+        name: 'operateRecord',
+        meta: {
+          title: '操作记录',
+          auth: true
+        },
+        component: _import('userManage/operateRecord')
+      },
+      // 超级签名
+      {
+        path: 'appInfo',
+        name: 'appInfo',
+        meta: {
+          title: '应用信息管理',
+          auth: true
+        },
+        component: _import('superResign/appInfo')
+      },
+      {
+        path: 'appIdInfo',
+        name: 'appIdInfo',
+        meta: {
+          title: 'Apple Id管理',
+          auth: true
+        },
+        component: _import('superResign/appIdInfo')
+      },
+      {
+        path: 'udidInfo',
+        name: 'udidInfo',
+        meta: {
+          title: 'UDID管理',
+          auth: true
+        },
+        component: _import('superResign/udidInfo')
+      },
+      // 企业签名
+      {
+        path: 'businessSignature',
+        name: 'businessSignature',
+        meta: {
+          title: '企业应用管理',
+          auth: true
+        },
+        component: _import('businessSignature/businessSignature')
+      },
+      {
+        path: 'businessAccount',
+        name: 'businessAccount',
+        meta: {
+          title: '企业账号管理',
+          auth: true
+        },
+        component: _import('businessSignature/businessAccount')
+      },
+      // 安卓应用
+      {
+        path: 'androidManage',
+        name: 'androidManage',
+        meta: {
+          title: '安卓应用管理',
+          auth: true
+        },
+        component: _import('androidManage/androidManage')
+      },
+      // 系统配置
+      {
+        path: 'sysConfig',
+        name: 'sysConfig',
+        meta: {
+          title: '系统配置',
+          auth: true
+        },
+        component: _import('sysConfig/sysConfig')
+      },
+      // 系统 前端日志
+      {
+        path: 'log',
+        name: 'log',
+        meta: {
+          title: '前端日志',
+          auth: true
+        },
+        component: _import('system/log')
+      },
+      // 刷新页面 必须保留
+      {
+        path: 'refresh',
+        name: 'refresh',
+        hidden: true,
+        component: _import('system/function/refresh')
+      },
+      // 页面重定向 必须保留
+      {
+        path: 'redirect/:route*',
+        name: 'redirect',
+        hidden: true,
+        component: _import('system/function/redirect')
+      }
+    ]
+  }
+]
+
+/**
+ * 在主框架之外显示
+ */
+const frameOut = [
+  // 登录
+  {
+    path: '/login',
+    name: 'login',
+    component: _import('system/login')
+  }
+]
+
+/**
+ * 错误页面
+ */
+const errorPage = [
+  {
+    path: '*',
+    name: '404',
+    component: _import('system/error/404')
+  }
+]
+
+// 导出需要显示菜单的
+export const frameInRoutes = frameIn
+
+// 重新组织后导出
+export default [
+  ...frameIn,
+  ...frameOut,
+  ...errorPage
+]

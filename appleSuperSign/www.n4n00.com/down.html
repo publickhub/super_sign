@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://auto.iizvv.online/detail/1 -->
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport">
+	<title>小忆签名</title>
+	<link href="down_files/app.css" rel="stylesheet">
+	<link href="down_files/web_ios.css" rel="stylesheet">
+	<link href="./down_files/zy.media.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="down_files/chunk-1d13f6a2.css">
+	<script src="./down_files/zy.media.min.js"></script>
+	<script src="./down_files/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./down_files/swiper.min.css">
+	<script type="text/javascript" src="./down_files/swiper.min.js"></script>
+	<script type="text/javascript" src="./down_files/clipboard.min.js"></script>
+
+	<style type="text/css">
+		pre {
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+
+		#modelView {
+			background-color: #000000;
+			z-index: 100;
+			opacity: 0.7;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			display: none
+		}
+
+		.playvideo {
+			z-index: 9999;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -271px;
+			margin-left: -125px;
+		}
+
+		.zy_media {
+			z-index: 999999999;
+			width: 250px;
+			height: 542px
+		}
+	</style>
+	<script>
+		$(document).ready(function () {
+			down();
+
+			$('.open-btn').on('click', function () {
+				var $this = $(this);
+				if ($this.html() == '展开') {
+					$this.html('收起');
+					$('.comment-con,.information-box').removeClass('hidden');
+				} else {
+					$('.comment-con,.information-box').addClass('hidden');
+					$this.html('展开');
+				}
+
+
+			})
+
+			var copyBtn = new ClipboardJS('#copy-btn');
+			copyBtn.on('success', function (e) {
+				alert('链接复制成功，快去打开吧~');
+				$('.safari-tips').hide();
+			});
+			copyBtn.on('error', function (e) {
+				console.log(e);
+			});
+			$('.copy-url input').val(location.href)
+		})
+
+
+
+		var appleId = "";
+		var ua = navigator.userAgent;
+
+
+
+		onCreate();
+
+		function stopVideo() {
+			$('.playvideo').hide();
+			$('#modelView').hide();
+		}
+
+		function playVideo() {
+			$('.playvideo').show();
+			$('#modelView').show();
+
+			zymedia('video', { autoplay: true, preload: 'auto', videoWidth: '250px', videoHeight: ' 541.761px', aspectRation: '(2 / 1)' });
+		}
+
+		function onCreate() {
+			if (/(iPhone|iPad|iPod|iOS)/i.test(ua)) {
+				if ((/Safari/.test(ua) && !/Chrome/.test(ua) && !/baidubrowser/.test(ua))) {
+
+				} else {
+					var ual = ua.toLowerCase();
+					var isWeixin = ual.indexOf('micromessenger') != -1;
+					if (isWeixin) {
+						$('.mask').show();
+						$("html").add("body").css({
+							"overflow": "hidden"
+						})
+					} else {
+						$('.safari-tips').show();
+					}
+				}
+			} else if (/(Android|Linux)/i.test(ua)) { } else {
+				$('.contain-page').hide();
+				$('.pc-box').show();
+			}
+			$('.no_safar').hide();
+
+			var id = GetQueryString("id");
+
+			//id = "36Yr"
+			var servicePath = "https://www.n4n00.com/appservice"
+
+			$.getJSON(servicePath + "/getappinfo?id=" + id, function (result) {
+				if (result.statu == 0) {
+					var data = result.data;
+					if (data.length < 1) {
+						alert("该APP不存在");
+					}
+					else {
+						var appInfo = data[0];
+						appleId = appInfo.id;
+						var appName = appInfo.app_name;
+						var iconData = appInfo.icon_base64;
+						$("#apple_title").text(appName);
+						$("#app-icon").attr("src", iconData);
+						var banner = $.parseJSON(appInfo.introduce_image);
+						if (banner.length == 0) {
+							$(".intro-swiper").hide = true
+						}
+						else {
+							var htmlTmp = "";
+							for (var i = 0; i < banner.length; i++) {
+								var item = banner[i];
+								if (i == 0) {
+									htmlTmp += '<div class="swiper-slide swiper-slide-active">' +
+										'<img src="' + item.url + '" alt=""></div>';
+								}
+								else if (i == 1) {
+									htmlTmp += '<div class="swiper-slide swiper-slide-next">' +
+										'<img src="' + item.url + '" alt=""></div>';
+								} else {
+									htmlTmp += '<div class="swiper-slide">' +
+										'<img src="' + item.url + '" alt=""></div>';
+								}
+							}
+							$("#intro-swiper").append(htmlTmp)
+
+							var swiper = new Swiper('.imgs-box', {
+								scrollbar: '.imgs-box .swiper-scrollbar',
+								scrollbarHide: true,
+								slidesPerView: 'auto',
+								grabCursor: true
+							});
+						}
+
+						var introduce = appInfo.introduce;
+						if (introduce.length == 0) {
+							$(".app-intro").hide = true
+						}
+						else {
+							$("#introInfo").text(introduce)
+						}
+
+					}
+				}
+			});
+		}
+
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]); return null;
+		}
+
+		var time = 1;
+		var times = 1;
+		var itemService = GetQueryString("itemService");
+		function down() {
+			if (time > 0) {
+				window.location.href = "itms-services://?action=download-manifest&url=" + escape(itemService);
+				time--;
+			}
+			setTimeout(function () {
+				if (times > 0) {
+					document.getElementById("btn").innerHTML = "已完成"
+					times--;
+				}
+			}, 5000);
+		}
+
+
+	</script>
+</head>
+
+<body>
+	<!-- 蒙版 -->
+	<div id="modelView" onclick="stopVideo()"></div>
+
+	<div id="app">
+		<div data-v-5cecdd32="" class="container">
+			<!-- info -->
+			<div class="app-info">
+				<div class="app-logo">
+					<img id="app-icon" src="./down_files/defaultIcon.jpg">
+				</div>
+				<div class="app-info-rig">
+					<strong id="apple_title">NN内测</strong>
+					<p>娱乐</p>
+					<div class="clr">
+						<a class="arouse" href="#" onclick="playVideo()"><b>?</b>安装教程</a>
+						<button data-v-5cecdd32="" type="button" class="btn btn-mini step1"
+							onclick="down()">免费安装</button>
+					</div>
+				</div>
+			</div>
+			<!-- 图片展示 -->
+
+			<div class="swiper-container imgs-box swiper-container-horizontal" style="cursor: -webkit-grab;">
+				<div id="intro-swiper" class="swiper-wrapper">
+					<!-- <div class="swiper-slide swiper-slide-active">
+									<img src="./down_files/5d50f6c8304eb.jpg" alt="">
+								</div>
+												<div class="swiper-slide swiper-slide-next">
+									<img src="./down_files/5d50f6cc237b3.jpg" alt="">
+								</div>
+												<div class="swiper-slide">
+									<img src="./down_files/5d50f6d0acbc7.jpg" alt="">
+								</div>-->
+				</div>
+				<!-- Add Scrollbar -->
+				<div class="swiper-scrollbar" style="opacity: 0; display: none;">
+					<div class="swiper-scrollbar-drag" style="width: 0px;"></div>
+				</div>
+			</div>
+
+			<!-- intro -->
+			<div class="app-intro">
+				<h2 class="app-title">简介</h2>
+				<div class="app-intro-con" style="height: auto;">
+					<pre id="introInfo"></pre>
+					<span style="display: none;">更多</span>
+				</div>
+			</div>
+			<!-- 评分及评论 -->
+			<div class="comment-box">
+				<h2 class="app-title">
+					评分及评论</h2>
+				<div class="comment-con">
+					<div class="comment-left">
+						<strong>4.9</strong>
+						<p>满分 5 分</p>
+					</div>
+					<div class="comment-right">
+						<ul class="comment-star-list">
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+						</ul>
+						<p><span class="down-count">5.89万</span>个评分</p>
+					</div>
+				</div>
+			</div>
+			<!-- 版本号 -->
+			<div class="app-intro">
+				<h2 class="app-title">新功能</h2>
+				<div class="app-intro-con" style="height: auto;">
+					<p>版本 1.0</p>
+				</div>
+			</div>
+			<div data-v-5cecdd32="" class="information-info">
+				<h2 data-v-5cecdd32="" class="app-title">信息</h2>
+				<ul data-v-5cecdd32="" class="information-list">
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">销售商</span>
+						<div data-v-5cecdd32="" class="r">NN内测平台</div>
+					</li>
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">兼容性</span>
+						<div data-v-5cecdd32="" class="r">需要iOS9.0或更高版本。与iPhone、iPad和iPodtouch兼容。</div>
+					</li>
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">语言</span>
+						<div data-v-5cecdd32="" class="r">简体中文</div>
+					</li>
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">年龄分级</span>
+						<div data-v-5cecdd32="" class="r">限4岁以上</div>
+					</li>
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">价格</span>
+						<div data-v-5cecdd32="" class="r">免费</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!-- 流程图弹框 -->
+
+	<div class="playvideo" style="display: none;">
+		<div class="zy_media">
+			<video poster="./down_files/cover.png" data-config='{"mediaTitle": "NN内测教程"}' webkit-playsinline=""
+				playsinline="" x5-playsinline="" x-webkit-airplay="allow">
+				<source src="./down_files/jc.mp4" type="video/mp4">
+				您的浏览器不支持HTML5视频
+			</video>
+
+		</div>
+	</div>
+
+	<!-- 不是在Safar浏览器打开 -->
+	<div class="no_safar">
+		<div class="tip_img">
+			<img src="./down_files/safar_bg.png" alt="" class="ios_img">
+		</div>
+		<div class="model"></div>
+	</div>
+
+	<!-- safari提示框 -->
+	<div class="mask-box safari-tips">
+		<div class="mask-bg"></div>
+		<div class="mask-pop">
+			<span class="mask-colsed"><img src="./down_files/colsed.png" alt=""></span>
+			<img class="copy-url-img" src="./down_files/safari-tip.png" alt="">
+			<div class="copy-url">
+				<input id="foo" type="text">
+				<button data-clipboard-target="#foo" id="copy-btn">复制</button>
+			</div>
+		</div>
+	</div>
+	<!-- 蒙版 -->
+	<div class="mask">
+		<img src="./down_files/go-safari.png" alt="">
+	</div>
+
+	<!-- 免责声明 -->
+	<div class="disclaimer">
+		免责声明：<br>
+		本网站仅提供下载托管，App内容相关事项由开发者负责，与本网站无关。
+	</div>
+	</div>
+	<!-- 电脑展示 -->
+	<div class="pc-box" style="display: none;">
+		<div class="pc-logo">
+			<img src="">
+		</div>
+		<p>111</p>
+		<img class="code"
+			src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOcAAADnAQMAAADfOtNjAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABPElEQVRYhe2YPa7DIBCEB1GkzBF8FB8NjsZRcoSULixvdhfwj+TuvWYspgiYj2bFMECAoaGh/9BbTIs1wOuL2b8/zNQ6cdEmhVW7c+6DvHSWLS6YSvvKVv0TKJAQdekeQ20FN7yeQeGeFMmtXtw4loq23NBhL/s+VZjoPqkgrJqEt6KitnTBsr0kWb16tyYz1U4rVFYfkZWbYnJPapODDc8STrnBSYv+7MNuTRwipBYYiF6vld0HiSns4NV6dbPZLuuHFjH1pIge6ObJliLM1KRJ8Z1KCiLenB1LSC3Ug/hVItQnx4bj0GKk+yTzpJtxu+4yOtruSPZsqtme6al1/B7bj6nL+lLS/npC82QNRH46uSet0A2HiKkvXZ0UTm8NTor6v4oloWi96VovIa25Ualb8yZVqOjQ0NDf9AOrEo5UHfB1NQAAAABJRU5ErkJggg=="
+			alt="">
+		<div class="info">请使用相机扫码下载</div>
+	</div>
+
+</body>
+
+</html>

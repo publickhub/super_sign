@@ -1,0 +1,122 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+
+
+
+ lane :login do |option|
+    require "spaceship"
+
+    user  = option[:user]
+    pwd  = option[:pwd]
+    bundleid  = option[:bundleid]
+
+
+    puts user
+    puts pwd
+    login = Spaceship::Portal.login(user, pwd)
+
+    puts login
+
+    puts "正在创建APP,bundle=" + bundleid
+
+    #创建APP
+    app = Spaceship::Portal.app.create!(bundle_id: bundleid, name: bundleid)
+
+    puts "创建证书"
+
+    #创建CSR
+    #csr, pkey = Spaceship::Portal.certificate.create_certificate_signing_request
+    #File.write("ios" + ".csr", csr)
+    #File.write("ios" + ".key", pkey)
+
+    #读取CSR，pkey
+    csr = File.read("ios.csr")
+    pkey = File.read("ios.key")
+
+    #创建推送证书
+    Spaceship::Portal.certificate.production_push.create!(csr: csr, bundle_id: bundleid)
+
+    #创建证书
+    Spaceship::Portal.certificate.production.create!(csr: csr)
+
+    puts "下载证书"
+
+    #下载证书
+    prod_certs = Spaceship::Portal.certificate.production.all
+    cert_content = prod_certs.last.download
+
+    #下载推送证书
+    prod_push_certs = Spaceship::Portal.certificate.production_push.all
+    prod_cert_content = prod_push_certs.last.download
+
+    puts "保存证书"
+
+    #下载证书
+    File.write(bundleid + ".pem", cert_content)
+    #下载推送证书
+    File.write(bundleid + "_push.cer", prod_cert_content)
+
+
+    #查看所有设备
+    all_devices = Spaceship::Portal.device.all
+
+
+   # Spaceship::Portal.select_team
+
+  end
+
+ lane :addUDID do |option|
+    require "spaceship"
+
+    user  = option[:user]
+    pwd  = option[:pwd]
+    udidInfo  = option[:udid]
+    bundleid  = option[:bundleid]
+    cid  = option[:cid]
+
+    puts user
+    puts pwd
+    puts udidInfo
+    puts bundleid
+
+    login = Spaceship::Portal.login(user, pwd)
+
+    puts login
+
+    #正在添加设备
+    Spaceship::Portal.device.create!(name: "iosdeveloper", udid: udidInfo)
+
+    #创建新描述文件
+    cert = Spaceship::Portal.certificate.production.all.last
+
+    profile = Spaceship::Portal.provisioning_profile.ad_hoc.create!(bundle_id: bundleid,certificate: cert,name:cid)
+
+    File.write(bundleid + ".mobileprovision", profile.download)
+
+  end
+
+
+  lane :updateDeviceNum do |option|
+      require "spaceship"
+
+      user  = option[:user]
+      pwd  = option[:pwd]
+
+      login = Spaceship::Portal.login(user, pwd)
+      all_devices = Spaceship::Portal.device.all
+      puts "devicenum--" + all_devices.size.to_s + "--ok"
+   #   puts all_devices
+    end

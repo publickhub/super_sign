@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://auto.iizvv.online/detail/1 -->
+<html lang="en"><head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport">
+		<title>开心签</title>
+		<link href="down_files/app.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="down_files/chunk-1d13f6a2.css">
+	<script src="down_files/jquery-3.3.1.min.js"></script>
+	<script>
+        $(function(){
+            var msg = GetQueryString("msg");
+            $("#error-msg").html(decodeURIComponent(msg));
+
+            function GetQueryString(name)
+            {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if(r!=null)return  unescape(r[2]); return null;
+            }
+        });
+
+
+
+		</script></head>
+	
+	<body>
+		<img src ="down_files/error.png" style="width: 100%" >
+		<div id="app" style="text-align: center">
+			<span style="font-weight:bold">错误提示</span>
+			<br>
+			<div id="error-msg" style="margin-top: 30px">APP可用设备数已经超出最大限制</div>
+		</div>
+	
+
+</body></html>

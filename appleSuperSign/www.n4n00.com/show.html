@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://auto.iizvv.online/detail/1 -->
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport">
+	<title>开心签</title>
+	<link href="down_files/app.css" rel="stylesheet">
+	<link href="down_files/web_ios.css" rel="stylesheet">
+	<link href="./down_files/zy.media.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="down_files/chunk-1d13f6a2.css">
+	<script src="./down_files/zy.media.min.js"></script>
+	<script src="./down_files/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./down_files/swiper.min.css">
+	<script type="text/javascript" src="./down_files/swiper.min.js"></script>
+	<script type="text/javascript" src="./down_files/clipboard.min.js"></script>
+	<script type="text/javascript" src="./down_files/show.js"></script>
+
+	<style type="text/css">
+	pre {
+white-space: pre-wrap;
+word-wrap: break-word;
+}
+		#modelView {
+			background-color: #000000;
+			z-index: 100;
+			opacity: 0.7;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			display: none
+		}
+
+		.playvideo {
+			z-index: 9999;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -271px;
+			margin-left: -125px;
+		}
+
+		.zy_media {
+			z-index: 999999999;
+			width: 250px;
+			height: 542px
+		}
+	</style>
+
+</head>
+
+<body>
+	<!-- 蒙版 -->
+	<div id="modelView" onclick="stopVideo()"></div>
+
+	<div id="app">
+		<div data-v-5cecdd32="" class="container">
+			<!-- info -->
+			<div class="app-info">
+				<div class="app-logo">
+					<img id="app-icon" src="./down_files/defaultIcon.jpg">
+				</div>
+				<div class="app-info-rig">
+					<strong id="apple_title">开心签内测</strong>
+					<p>娱乐</p>
+					<div class="clr">
+						<a class="arouse" href="#" onclick="playVideo()"><b>?</b>安装教程</a>
+						<button data-v-5cecdd32="" type="button" class="btn btn-mini step1"
+							onclick="down()">免费安装</button>
+					</div>
+				</div>
+			</div>
+			<!-- 图片展示 -->
+
+			<div class="swiper-container imgs-box swiper-container-horizontal" style="cursor: -webkit-grab;">
+				<div id="intro-swiper" class="swiper-wrapper">
+					<!-- <div class="swiper-slide swiper-slide-active">
+									<img src="./down_files/5d50f6c8304eb.jpg" alt="">
+								</div>
+												<div class="swiper-slide swiper-slide-next">
+									<img src="./down_files/5d50f6cc237b3.jpg" alt="">
+								</div>
+												<div class="swiper-slide">
+									<img src="./down_files/5d50f6d0acbc7.jpg" alt="">
+								</div>-->
+				</div>
+				<!-- Add Scrollbar -->
+				<div class="swiper-scrollbar" style="opacity: 0; display: none;">
+					<div class="swiper-scrollbar-drag" style="width: 0px;"></div>
+				</div>
+			</div>
+
+			<!-- intro -->
+			<div class="app-intro">
+				<h2 class="app-title">简介</h2>
+				<div class="app-intro-con" style="height: auto;">
+					<pre id="introInfo"></pre>
+					<span style="display: none;">更多</span>
+				</div>
+			</div>
+			<!-- 评分及评论 -->
+			<div class="comment-box">
+				<h2 class="app-title">
+					评分及评论</h2>
+				<div class="comment-con">
+					<div class="comment-left">
+						<strong>4.9</strong>
+						<p>满分 5 分</p>
+					</div>
+					<div class="comment-right">
+						<ul class="comment-star-list">
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-star">
+									<img src="./down_files/star.png" alt="">
+									<div></div>
+								</div>
+								<div class="comment-progress">
+									<div></div>
+								</div>
+							</li>
+						</ul>
+						<p><span class="down-count">5.89万</span>个评分</p>
+					</div>
+				</div>
+			</div>
+			<!-- 版本号 -->
+			<div class="app-intro">
+				<h2 class="app-title">新功能</h2>
+				<div class="app-intro-con" style="height: auto;">
+					<p>版本 1.0</p>
+				</div>
+			</div>
+			<div data-v-5cecdd32="" class="information-info">
+				<h2 data-v-5cecdd32="" class="app-title">信息</h2>
+				<ul data-v-5cecdd32="" class="information-list">
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">销售商</span>
+						<div data-v-5cecdd32="" class="r">开心签内测平台</div>
+					</li>
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">兼容性</span>
+						<div data-v-5cecdd32="" class="r">需要iOS9.0或更高版本。与iPhone、iPad和iPodtouch兼容。</div>
+					</li>
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">语言</span>
+						<div data-v-5cecdd32="" class="r">简体中文</div>
+					</li>
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">年龄分级</span>
+						<div data-v-5cecdd32="" class="r">限4岁以上</div>
+					</li>
+					<li data-v-5cecdd32=""><span data-v-5cecdd32="" class="l">价格</span>
+						<div data-v-5cecdd32="" class="r">免费</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+			<!-- 免责声明 -->
+	<div class="disclaimer">
+		免责声明：<br>
+		本网站仅提供下载托管，App内容相关事项由开发者负责，与本网站无关。
+	</div>
+	</div>
+	</div>
+
+
+
+
+	<!-- 流程图弹框 -->
+
+	<div class="playvideo" style="display: none;">
+		<div class="zy_media">
+			<video poster="./down_files/cover.png" data-config='{"mediaTitle": "开心签教程"}' webkit-playsinline=""
+				playsinline="" x5-playsinline="" x-webkit-airplay="allow">
+				<source src="./down_files/jc.mp4" type="video/mp4">
+				您的浏览器不支持HTML5视频
+			</video>
+
+		</div>
+	</div>
+
+	<!-- 不是在Safar浏览器打开 -->
+	<div class="no_safar">
+		<div class="tip_img">
+			<img src="./down_files/safar_bg.png" alt="" class="ios_img">
+		</div>
+		<div class="model"></div>
+	</div>
+
+	<!-- safari提示框 -->
+	<div class="mask-box safari-tips">
+		<div class="mask-bg"></div>
+		<div class="mask-pop">
+			<span class="mask-colsed"><img src="./down_files/colsed.png" alt=""></span>
+			<img class="copy-url-img" src="./down_files/safari-tip.png" alt="">
+			<div class="copy-url">
+				<input id="foo" type="text">
+				<button data-clipboard-target="#foo" id="copy-btn">复制</button>
+			</div>
+		</div>
+	</div>
+	<!-- 蒙版 -->
+	<div class="mask">
+		<img src="./down_files/go-safari.png" alt="">
+	</div>
+
+
+
+	<!-- 电脑展示 -->
+	<div class="pc-box" style="display: none;">
+		<div class="pc-logo">
+			<img id="pc-box-img" src="./down_files/defaultIcon.jpg">
+		</div>
+		<p id="pc-box-title">开心签内测平台</p>
+		<div class="info">很抱歉，该应用尚不支持本设备</div>
+	</div>
+
+</body>
+
+</html>
